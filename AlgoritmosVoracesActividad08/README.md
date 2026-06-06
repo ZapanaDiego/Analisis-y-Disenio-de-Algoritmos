@@ -1,4 +1,4 @@
-```
+
 # Actividad 8: Algoritmos Voraces (Greedy)
 
 **Materia:** Estructura de Datos y Algoritmos  
@@ -93,4 +93,3 @@ Cantidad total de antenas: 2
 ## Reporte
 
 El análisis completo (estrategia greedy, justificación de optimalidad, complejidad Big-O y trazas de ejecución) se encuentra en `latex/main.pdf`.
-```
