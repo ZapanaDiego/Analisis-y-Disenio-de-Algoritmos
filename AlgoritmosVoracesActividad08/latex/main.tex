@@ -1,0 +1,360 @@
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+\usepackage[spanish, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{spanish}
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Set default/Latin font to Sans Serif in the main (rm) slot
+\babelfont{rm}{Noto Sans}
+% Assign a specific font for Spanish text
+\babelfont[spanish]{rm}{Noto Sans}
+
+% Add because main language is not English
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+
+% --- ADDITIONAL PACKAGES ---
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{caption}
+
+% Style for Java code
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\itshape\color{codegreen},
+    keywordstyle=\bfseries\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+% hyperref must be the last package
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Actividad 8: Algoritmos Voraces (Greedy)},
+}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Actividad 8: Algoritmos Voraces (Greedy)}}\\[0.5cm]
+    {\large \textbf{Materia:} Estructura de Datos y Algoritmos}\\[0.2cm]
+    {\textbf{Entregable:} PDF + Repositorio GitHub}
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Objetivo}
+Aplicar la estrategia de algoritmos voraces (\textit{Greedy}) para resolver problemas de optimización, además de analizar formalmente el comportamiento, correctitud y la complejidad asintótica de los algoritmos implementados.
+
+\section*{Repositorio GitHub}
+\textbf{Enlace al repositorio:} \url{https://github.com/tu-usuario/tu-repositorio-greedy} \\
+\textit{(Nota: El repositorio incluye el código fuente en Java, el historial de commits realizados durante el desarrollo y un archivo README.md documentando la ejecución del proyecto).}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% ==========================================
+% PROBLEMA 1
+% ==========================================
+\section{Problema 1: Mochila Fraccional}
+
+\subsection{Descripción y Fundamento Teórico}
+El problema de la Mochila Fraccional plantea la necesidad de maximizar el valor total de un conjunto de objetos cargados en una mochila con una capacidad de peso limitada ($W$). Cada objeto $i$ posee un valor $v_i$ y un peso $w_i$. A diferencia del problema clásico de la mochila $0/1$, el dominio de este problema \textbf{permite el fraccionamiento}; es decir, se puede tomar una porción $x_i \in [0, 1]$ de cualquier objeto. 
+
+\subsection{Estrategia Greedy y Demostración de Optimalidad}
+La estrategia voraz consiste en evaluar la \textbf{densidad de valor} de cada objeto, definida como la proporción $d_i = \frac{v_i}{w_i}$ (valor aportado por cada unidad de peso). 
+\begin{enumerate}
+    \item Se calcula la densidad $d_i$ para los $N$ objetos.
+    \item Se ordena el conjunto de objetos en orden descendente respecto a su densidad.
+    \item Se itera sobre los objetos ordenados: si la capacidad restante lo permite, se toma el objeto íntegramente ($x_i = 1$). Si el objeto excede la capacidad actual, se toma la fracción exacta ($x_i < 1$) que agote el espacio de la mochila, y el algoritmo termina.
+\end{enumerate}
+
+\textbf{Justificación formal de optimalidad:} La propiedad de elección greedy garantiza una solución óptima global. Supongamos por contradicción que existe una solución óptima alternativa que \textit{no} prioriza los objetos por mayor $d_i$. En dicha solución, existe un objeto con densidad $d_x$ excluido o fraccionado, mientras que un objeto con densidad $d_y$ (donde $d_y < d_x$) fue incluido. Dado que se permiten fracciones, podríamos intercambiar una unidad de peso del objeto $y$ por una unidad del objeto $x$. Este intercambio aumentaría el valor total de la mochila (ya que $d_x > d_y$) sin alterar el peso total. Esto contradice la premisa de que la solución alternativa era óptima. Por inducción, la estrategia greedy es matemáticamente exacta.
+
+\subsection{Análisis de Complejidad Asintótica (Big-O)}
+\begin{itemize}
+    \item \textbf{Complejidad Temporal: $O(N \log N)$} \\
+    El algoritmo se compone de tres fases:
+    1) Calcular el ratio $d_i$ toma $O(N)$. 
+    2) Ordenar los objetos (típicamente mediante Timsort o Mergesort en Java \texttt{Arrays.sort}) exige, en el peor caso, $O(N \log N)$ comparaciones. 
+    3) El bucle iterativo para llenar la mochila procesa cada elemento a lo sumo una vez, requiriendo $O(N)$. 
+    Por la regla de la suma en el análisis asintótico, el término dominante dicta la complejidad temporal total: $O(N \log N) + O(N) = \mathbf{O(N \log N)}$.
+    
+    \item \textbf{Complejidad Espacial: $O(N)$} \\
+    Se requiere memoria $O(N)$ para almacenar el arreglo de los $N$ objetos instanciados en memoria. Adicionalmente, el algoritmo de ordenamiento subyacente (\texttt{Mergesort/Timsort}) en Java de objetos requiere $O(N)$ espacio auxiliar en el peor caso. Por lo tanto, el espacio adicional requerido escala linealmente.
+\end{itemize}
+
+\subsection{Código Fuente en Java}
+\begin{lstlisting}[language=Java, caption=Implementación algorítmica de la Mochila Fraccional]
+import java.util.Arrays;
+import java.util.Comparator;
+
+
+public class MochilaFraccional {
+
+    static class Objeto {
+        String nombre;
+        double valor;
+        double peso;
+        double ratio;
+
+        Objeto(String nombre, double valor, double peso) {
+            this.nombre = nombre;
+            this.valor  = valor;
+            this.peso   = peso;
+            this.ratio  = valor / peso;
+        }
+    }
+
+    static void print(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    static double resolverMochila(Objeto[] objetos, double capacidad) {
+
+        Arrays.sort(objetos, Comparator.comparingDouble((Objeto o) -> o.ratio).reversed());
+
+        double valorTotal    = 0.0;
+        double pesoRestante  = capacidad;
+
+        print("=== Mochila Fraccional ===");
+        print(String.format("Capacidad maxima: %.0f", capacidad));
+        print("");
+        print("Objetos seleccionados:");
+
+        for (Objeto obj : objetos) {
+            if (pesoRestante <= 0) break; // mochila llena
+
+            if (obj.peso <= pesoRestante) {
+                // Tomar el objeto completo
+                valorTotal   += obj.valor;
+                pesoRestante -= obj.peso;
+                print(String.format("  %s completo  (valor: %.1f, peso: %.1f, ratio: %.2f)",
+                        obj.nombre, obj.valor, obj.peso, obj.ratio));
+            } else {
+                // Tomar solo la fraccion que cabe
+                double fraccion = pesoRestante / obj.peso;
+                valorTotal  += fraccion * obj.valor;
+                print(String.format("  %.0f/%.0f Parte del objeto %s  (valor parcial: %.2f, ratio: %.2f)",
+                        pesoRestante, obj.peso, obj.nombre, fraccion * obj.valor, obj.ratio));
+                pesoRestante = 0;
+            }
+        }
+
+        print("");
+        print(String.format("Valor total obtenido: %.2f", valorTotal));
+        return valorTotal;
+    }
+
+    public static void main(String[] args) {
+
+        Objeto[] objetos1 = {
+            new Objeto("A", 60,  10),
+            new Objeto("B", 100, 20),
+            new Objeto("C", 120, 30)
+        };
+        resolverMochila(objetos1, 50);
+
+        print("");
+        print("----------------------------------------");
+        print("");
+
+        // ── Ejemplo 2 ──
+        Objeto[] objetos2 = {
+            new Objeto("A", 80,  20),
+            new Objeto("B", 100, 10),
+            new Objeto("C", 120, 30)
+        };
+        resolverMochila(objetos2, 25);
+    }
+}
+\end{lstlisting}
+
+\subsection{Ejemplos de Ejecución y Trazado}
+
+\textbf{Ejemplo 1:} Capacidad de la mochila = 50. Objetos iniciales: A(60, 10), B(100, 20), C(120, 30).
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llccc}
+\toprule
+\textbf{Paso} & \textbf{Objeto Seleccionado} & \textbf{Ratio (v/w)} & \textbf{Peso Utilizado} & \textbf{Beneficio Acumulado} \\
+\midrule
+1 & Objeto A (Completo) & 6.0 & 10 de 50 & 60.00 \\
+2 & Objeto B (Completo) & 5.0 & 20 de 40 & 160.00 \\
+3 & Objeto C (Fracción 20/30) & 4.0 & 20 de 20 & 240.00 \\
+\bottomrule
+\end{tabular}
+\caption{Trazado del Ejemplo 1. Resultado global: \textbf{240.00}}
+\end{table}
+
+\textbf{Ejemplo 2:} Capacidad de la mochila = 25. Objetos iniciales: A(80, 20), B(100, 10), C(120, 30).
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llccc}
+\toprule
+\textbf{Paso} & \textbf{Objeto Seleccionado} & \textbf{Ratio (v/w)} & \textbf{Peso Utilizado} & \textbf{Beneficio Acumulado} \\
+\midrule
+1 & Objeto B (Completo) & 10.0 & 10 de 25 & 100.00 \\
+2 & Objeto A (Fracción 15/20) & 4.0 & 15 de 15 & 160.00 \\
+\bottomrule
+\end{tabular}
+\caption{Trazado del Ejemplo 2. Resultado global: \textbf{160.00}}
+\end{table}
+
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% ==========================================
+% PROBLEMA 2
+% ==========================================
+\section{Problema 2: Cobertura de Antenas}
+
+\subsection{Descripción y Fundamento Teórico}
+El objetivo es instalar la cantidad mínima de antenas WiFi para cubrir un conjunto de $N$ casas ubicadas a lo largo de un eje unidimensional (carretera). Una antena posicionada en $p$ proporciona cobertura en un radio $R$, abarcando el intervalo $[p - R, p + R]$.
+
+\subsection{Estrategia Greedy y Demostración de Optimalidad}
+La estrategia (conocida algorítmicamente como \textit{Interval Covering}) se basa en estirar la cobertura de cada antena lo más a la derecha posible, cubriendo la casa desprotegida más a la izquierda en el extremo absoluto del rango de la antena.
+\begin{enumerate}
+    \item Se ordenan las posiciones de las casas de manera ascendente.
+    \item Sea $x$ la posición de la primera casa sin cobertura. Para asegurar que $x$ reciba señal, la antena debe estar en algún punto $p \in [x - R, x + R]$.
+    \item \textbf{Decisión Greedy:} Elegimos colocar la antena exactamente en $p = x + R$. 
+    \item \textbf{Justificación formal:} Colocar la antena en $x + R$ asegura que la casa en $x$ queda cubierta por el borde izquierdo del intervalo (ya que $(x+R)-R = x$). A su vez, el borde derecho del alcance se extiende hasta $(x+R)+R = x + 2R$. Cualquier posición $p < x + R$ cubriría menos espacio a la derecha, potencialmente requiriendo más antenas para futuras casas. Por tanto, esta decisión maximiza el alcance útil sin violar las restricciones, resultando en un mínimo global de antenas.
+\end{enumerate}
+
+\subsection{Análisis de Complejidad Asintótica (Big-O)}
+\begin{itemize}
+    \item \textbf{Complejidad Temporal: $O(N \log N)$} \\
+    Ordenar el arreglo de posiciones de tamaño $N$ toma $O(N \log N)$ mediante Dual-Pivot Quicksort (\texttt{Arrays.sort} para primitivos en Java). Posteriormente, existe un bucle \texttt{while} exterior y un \texttt{while} interior para iterar sobre el arreglo. A primera vista, los bucles anidados podrían sugerir una complejidad cuadrática, sin embargo, el puntero del arreglo \texttt{i} es un contador monótono estricto. Cada casa se verifica exactamente una vez, adelantando el puntero continuamente. El recorrido completo es estrictamente $O(N)$. Asintóticamente: $O(N \log N) + O(N) = \mathbf{O(N \log N)}$.
+    
+    \item \textbf{Complejidad Espacial: $O(N)$ o $O(1)$ auxiliar} \\
+    Si se ignora el espacio requerido para almacenar los datos de entrada y la salida de tamaño a lo sumo $N$, el algoritmo iterativo opera \textit{in-place} utilizando variables primitivas de control que toman espacio $O(1)$. Considerando la estructura \texttt{List} final que guarda $K$ antenas ($K \le N$), el espacio global es $\mathbf{O(N)}$.
+\end{itemize}
+
+\subsection{Código Fuente en Java}
+\begin{lstlisting}[language=Java, caption=Implementación algorítmica de Cobertura de Antenas]
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+public class CoberturaAntenas {
+
+    static void print(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    static List<Integer> colocarAntenas(int[] casas, int R) {
+        Arrays.sort(casas);
+
+        List<Integer> antenas = new ArrayList<>();
+        int i = 0;
+
+        while (i < casas.length) {
+            int posAntena = casas[i] + R;
+            antenas.add(posAntena);
+
+            while (i < casas.length && casas[i] <= posAntena + R) {
+                i++;
+            }
+        }
+
+        return antenas;
+    }
+
+    static void resolver(int[] casas, int R) {
+        print("=== Cobertura de Antenas ===");
+        print("Casas: " + Arrays.toString(casas));
+        print("Cobertura R: " + R);
+        print("");
+
+        List<Integer> antenas = colocarAntenas(casas, R);
+
+        print("Antenas colocadas en:");
+        for (int pos : antenas) {
+            print("  Posicion: " + pos
+                    + "  →  cubre [" + (pos - R) + ", " + (pos + R) + "]");
+        }
+        print("");
+        print("Cantidad total de antenas: " + antenas.size());
+    }
+
+    public static void main(String[] args) {
+
+        // ── Ejemplo 1 ──
+        int[] casas1 = {1, 2, 7, 11, 20, 21, 30};
+        resolver(casas1, 5);
+
+        print("");
+        print("----------------------------------------");
+        print("");
+
+        // ── Ejemplo 2 ──
+        int[] casas2 = {2, 4, 8, 15, 18, 22};
+        resolver(casas2, 3);
+    }
+}
+\end{lstlisting}
+
+\subsection{Ejemplos de Ejecución y Trazado}
+
+\textbf{Ejemplo 1:} Casas = $[1, 2, 7, 11, 20, 21, 30]$. Radio $R = 5$.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{clccl}
+\toprule
+\textbf{Iteración} & \textbf{Casa sin Cobertura} & \textbf{Posición Antena ($x+R$)} & \textbf{Alcance} & \textbf{Casas Cubiertas} \\
+\midrule
+1 & Casa en $x=1$  & \textbf{6}  & $[1, 11]$ & \{1, 2, 7, 11\} \\
+2 & Casa en $x=20$ & \textbf{25} & $[20, 30]$ & \{20, 21, 30\} \\
+\bottomrule
+\end{tabular}
+\caption{Trazado del Ejemplo 1. Total de antenas: \textbf{2} (Ubicadas en 6 y 25).}
+\end{table}
+
+\textbf{Ejemplo 2:} Casas = $[2, 4, 8, 15, 18, 22]$. Radio $R = 3$.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{clccl}
+\toprule
+\textbf{Iteración} & \textbf{Casa sin Cobertura} & \textbf{Posición Antena ($x+R$)} & \textbf{Alcance} & \textbf{Casas Cubiertas} \\
+\midrule
+1 & Casa en $x=2$  & \textbf{5}  & $[2, 8]$   & \{2, 4, 8\} \\
+2 & Casa en $x=15$ & \textbf{18} & $[15, 21]$ & \{15, 18\} \\
+3 & Casa en $x=22$ & \textbf{25} & $[22, 28]$ & \{22\} \\
+\bottomrule
+\end{tabular}
+\caption{Trazado del Ejemplo 2. Total de antenas: \textbf{3} (Ubicadas en 5, 18 y 25).}
+\end{table}
+
+\end{document}
