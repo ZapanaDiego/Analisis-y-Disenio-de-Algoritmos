@@ -41,10 +41,10 @@ Desde la raíz del repositorio (`AlgoritmosVoracesActividad08/`):
 
 ### Problema 1 — Mochila Fraccional
 
-bash
+```bash
 javac MochilaFraccional.java
 java MochilaFraccional
-
+```
 
 **Salida esperada:**
 
@@ -61,10 +61,10 @@ Valor total obtenido: 240.00
 
 ### Problema 2 — Cobertura de Antenas
 
-bash
+```bash
 javac CoberturaAntenas.java
 java CoberturaAntenas
-
+```
 
 **Salida esperada:**
 
