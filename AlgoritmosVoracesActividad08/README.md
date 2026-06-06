@@ -1,5 +1,3 @@
-Entendido. Aquí tienes **exclusivamente el código** que debes copiar y pegar directamente en tu archivo `README.md`:
-
 ```
 # Actividad 8: Algoritmos Voraces (Greedy)
 
@@ -19,14 +17,14 @@ Implementación de dos algoritmos voraces (Greedy) clásicos:
 
 ## Estructura del repositorio
 
-```
+
 AlgoritmosVoracesActividad08/
 ├── MochilaFraccional.java   # Problema 1: Mochila Fraccional
 ├── CoberturaAntenas.java    # Problema 2: Cobertura de Antenas
 └── latex/
     ├── main.tex             # Código fuente del reporte
     └── main.pdf             # Reporte final compilado
-```
+
 
 ---
 
@@ -43,13 +41,13 @@ Desde la raíz del repositorio (`AlgoritmosVoracesActividad08/`):
 
 ### Problema 1 — Mochila Fraccional
 
-```bash
+bash
 javac MochilaFraccional.java
 java MochilaFraccional
-```
+
 
 **Salida esperada:**
-```
+
 === Mochila Fraccional ===
 Capacidad maxima: 50
 
@@ -59,17 +57,17 @@ Objetos seleccionados:
   20/30 de C       | valor:  80.00 | ratio: 4.0000 | peso usado: 20
 
 Valor total obtenido: 240.00
-```
+
 
 ### Problema 2 — Cobertura de Antenas
 
-```bash
+bash
 javac CoberturaAntenas.java
 java CoberturaAntenas
-```
+
 
 **Salida esperada:**
-```
+
 === Cobertura de Antenas ===
 Casas: [1, 2, 7, 11, 20, 21, 30]
 Cobertura R: 5
@@ -79,7 +77,7 @@ Antenas colocadas en:
   Posicion  25  |  cubre [20, 30]
 
 Cantidad total de antenas: 2
-```
+
 
 ---
 
