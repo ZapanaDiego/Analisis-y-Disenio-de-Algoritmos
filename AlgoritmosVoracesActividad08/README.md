@@ -17,14 +17,14 @@ Implementación de dos algoritmos voraces (Greedy) clásicos:
 
 ## Estructura del repositorio
 
-
+```
 AlgoritmosVoracesActividad08/
 ├── MochilaFraccional.java   # Problema 1: Mochila Fraccional
 ├── CoberturaAntenas.java    # Problema 2: Cobertura de Antenas
 └── latex/
     ├── main.tex             # Código fuente del reporte
     └── main.pdf             # Reporte final compilado
-
+```
 
 ---
 
