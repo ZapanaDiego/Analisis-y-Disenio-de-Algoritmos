@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026/Arch Linux) (preloaded format=xelatex 2026.6.4)  6 JUN 2026 10:51
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026/Arch Linux) (preloaded format=xelatex 2026.6.4)  10 JUN 2026 18:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -647,6 +647,13 @@ Package hyperref Info: Link coloring ON on input line 64.
 \openout3 = `main.out'.
 
 
+! Missing } inserted.
+<inserted text> 
+                }
+l.72 \end{center}
+                 
+? 
+
 Overfull \hbox (4.41736pt too wide) in paragraph at lines 78--80
 \TU/NotoSans(0)/b/n/10.95 Enlace al repositorio: [][]$[][][][][] [] [] [] [][][
 ][][][] [] [][][] [] [][][][][][][][][][][] [] [][][][][][][][][][][][][][][][]
@@ -677,12 +684,11 @@ Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
-[5]
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono9-regular]:!
-[6] (./main.aux)
+[5] [6] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -693,7 +699,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  16383 strings out of 470137
  310601 string characters out of 5478428
- 1332250 words of memory out of 5000000
+ 1317250 words of memory out of 5000000
  44796 multiletter control sequences out of 15000+600000
  631726 words of font info for 82 fonts, out of 8000000 for 9000
  40 hyphenation exceptions out of 8191
