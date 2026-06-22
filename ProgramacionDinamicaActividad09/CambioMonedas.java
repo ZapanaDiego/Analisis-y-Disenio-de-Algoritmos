@@ -59,9 +59,9 @@ public class CambioMonedas {
         return combinacion.toString();
     }
 
-    public static void ejecutarCaso(int[] monedas, int cantidad, String identificadorCaso) {
+    public static void ejecutarCaso(int[] monedas, int cantidad, String numeroCaso) {
         println("---------------------------------------------");
-        println("Caso " + identificadorCaso + ": Monedas = "
+        println("Caso de prueba " + numeroCaso + ": Monedas = "
                 + Arrays.toString(monedas) + ", Cantidad = " + cantidad);
 
         ResultadoDP resultado = calcularDP(monedas, cantidad);
@@ -81,20 +81,17 @@ public class CambioMonedas {
     }
 
     public static void main(String[] args) {
-        println("   SOLUCION: Cambio Minimo de Monedas (PD)   ");
-        
-        ejecutarCaso(new int[]{1, 3, 4}, 6, "Prueba 1");
-        ejecutarCaso(new int[]{1, 2, 5}, 11, "Prueba 2");
-        println("---------------------------------------------");
+        println(" SOLUCION: Cambio Minimo de Monedas (PD)");
 
+        ejecutarCaso(new int[]{1, 3, 4}, 6, "1");
+
+        ejecutarCaso(new int[]{1, 2, 5}, 11, "2");
 
         Scanner scanner = new Scanner(System.in);
         try {
             
-            
-            print("ingrese las denominaciones de monedas separadas por comas (ej. 1,3,4): ");
+            print("Ingrese las denominaciones de monedas separadas por comas (ej. 1,3,4): ");
             String entradaMonedas = scanner.nextLine();
-            
             
             String[] partes = entradaMonedas.split(",");
             int[] monedasUsuario = new int[partes.length];
@@ -102,24 +99,24 @@ public class CambioMonedas {
                 monedasUsuario[i] = Integer.parseInt(partes[i].trim());
             }
 
-
-            print("Ingrese la cantidad (monto) que desea analizar: ");
+            print("ingrese la cantidad (monto) que desea analizar: ");
             int cantidadUsuario = scanner.nextInt();
 
             if (cantidadUsuario < 0) {
-                println("la cantidad debe ser un número entero no negativo.");
+                println("La cantidad debe ser un numero entero no negativo.");
             } else {
-                
                 ejecutarCaso(monedasUsuario, cantidadUsuario, "Usuario");
             }
 
         } catch (NumberFormatException e) {
-            println("Error: ingresar únicamente números enteros.");
+            println("Error: ingresar unicamente numeros enteros");
         } catch (Exception e) {
-            println("Ocurrio un error al leer los datos.");
+            println("Ocurrio un error al leer los datos de la terminal.");
         } finally {
             scanner.close();
         }
-        
+
+        println("---------------------------------------------");
+        println("Ejecucion finalizada.");
     }
 }
